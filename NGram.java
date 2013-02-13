@@ -41,7 +41,7 @@ public class NGram extends Configured implements Tool {
         	queryString += "\n" + queryLine;
         }
 
-        queryBag = new NGramBag(queryString);
+        queryBag = new NGramBag(queryString, ngramSize);
 
         // if (job.getBoolean("wordcount.skip.patterns", false)) {
         //   Path[] patternsFiles = new Path[0];
@@ -70,7 +70,7 @@ public class NGram extends Configured implements Tool {
 
       public void map(Text key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 
-      	NGramBag bag = new NGramBag(value, ngramSize);
+      	NGramBag bag = new NGramBag(value.toString(), ngramSize);
 
       	output.collect(key, new IntWritable(bag.similarity(queryBag)));
       	// System.out.println(value);
