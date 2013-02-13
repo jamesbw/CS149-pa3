@@ -56,6 +56,7 @@ public class NGram extends Configured implements Tool {
       public void map(Text key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 
       	output.collect(key, one);
+      	System.out.println(key.get());
 
         // String line = (caseSensitive) ? value.toString() : value.toString().toLowerCase();
 
