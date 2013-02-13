@@ -106,8 +106,9 @@ public class NGram extends Configured implements Tool {
         while (values.hasNext()) {
           sum += values.next().get();
         }
-        output.collect(key, new IntWritable(sum));
+        // output.collect(key, new IntWritable(sum));
       }
+      output.collect(key, values.next());
     }
 
     public int run(String[] args) throws Exception {
