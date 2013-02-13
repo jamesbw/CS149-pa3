@@ -20,6 +20,7 @@ import org.apache.hadoop.io.IOUtils;
 public class ArticleInputFormat extends
     FileInputFormat<Text, Text> {
 
+  @Override
   public RecordReader<Text, Text> getRecordReader(
       InputSplit input, JobConf job, Reporter reporter)
       throws IOException {
@@ -33,15 +34,15 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
 
   static private Pattern PATTERN = Pattern.compile("<title>(.*?)</title>(.*?)(<title>|$)");
 
-  private FileSplit fileSplit;
-  private Configuration conf;
+  // private FileSplit fileSplit;
+  // private Configuration conf;
   private Matcher matcher;
   private boolean started;
   private int fileLength;
 
   public ArticleRecordReader(JobConf job, FileSplit split) throws IOException {
-    this.fileSplit = fileSplit;
-    this.conf = conf;
+    // this.fileSplit = fileSplit;
+    // this.conf = conf;
     this.started = false;
 
     this.fileLength = (int) fileSplit.getLength();
@@ -51,6 +52,7 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
 
     FileSystem fs = file.getFileSystem(conf);
     FSDataInputStream in = null;
+    String fileAsString;
     try {
         in = fs.open(file);
         IOUtils.readFully(in, contents, 0, contents.length);                
@@ -59,13 +61,13 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
         IOUtils.closeStream(in);
     }
 
-    this.matcher = Pattern.matcher(fileAsString);
+    this.matcher = PATTERN.matcher(fileAsString);
   }
 
   public boolean next(Text key, Text value) throws IOException {
     if (matcher.find()) {
-      key.set(matcher.start(1));
-      value.set(matcher.start(2));
+      key.set(matcher.group(1));
+      value.set(matcher.group(2));
       started = true;
       return true;
     }
