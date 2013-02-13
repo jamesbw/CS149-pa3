@@ -78,7 +78,10 @@ public class NGram extends Configured implements Tool {
 
       	NGramBag bag = new NGramBag(value.toString(), ngramSize);
 
-      	output.collect(key, new IntWritable(bag.similarity(queryBag)));
+      	int similarity = bag.similarity(queryBag);
+      	if (similarity > 0) {
+	      	output.collect(key, new IntWritable(similarity));
+      	}
       	// System.out.println(value);
 
         // String line = (caseSensitive) ? value.toString() : value.toString().toLowerCase();
@@ -107,8 +110,8 @@ public class NGram extends Configured implements Tool {
           sum += values.next().get();
         }
         // output.collect(key, new IntWritable(sum));
+      	output.collect(key, values.next());
       }
-      output.collect(key, values.next());
     }
 
     public int run(String[] args) throws Exception {
