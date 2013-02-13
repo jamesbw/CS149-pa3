@@ -11,7 +11,8 @@ import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.FileSplit;
 // import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapred.InputSplit;
-import org.apache.hadoop.mapreduce.RecordReader;
+// import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.conf.Configuration;
  
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -42,7 +43,7 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
   private boolean started;
   private int fileLength;
 
-  public ArticleRecordReader(JobConf job, FileSplit fileSplit) throws IOException {
+  public ArticleRecordReader(JobConf conf, FileSplit fileSplit) throws IOException {
     // this.fileSplit = fileSplit;
     // this.conf = conf;
     this.started = false;
