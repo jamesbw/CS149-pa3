@@ -99,7 +99,7 @@ public class NGram extends Configured implements Tool {
       conf.setReducerClass(Reduce.class);
 
       // conf.setInputFormat(ArticleInputFormat.class);
-      conf.setInputFormat(TextInputFormat.class);
+      conf.setInputFormat(ArticleInputFormat.class);
       conf.setOutputFormat(TextOutputFormat.class);
 
       // List<String> other_args = new ArrayList<String>();
