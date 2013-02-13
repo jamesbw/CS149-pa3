@@ -7,8 +7,10 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapred.FileInputFormat;
 
-import org.apache.hadoop.mapreduce.lib.input.FileSplit;
-import org.apache.hadoop.mapreduce.InputSplit;
+// import org.apache.hadoop.mapreduce.lib.input.FileSplit;
+import org.apache.hadoop.mapred.FileSplit;
+// import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapred.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.conf.Configuration;
  
@@ -40,7 +42,7 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
   private boolean started;
   private int fileLength;
 
-  public ArticleRecordReader(JobConf job, FileSplit split) throws IOException {
+  public ArticleRecordReader(JobConf job, FileSplit fileSplit) throws IOException {
     // this.fileSplit = fileSplit;
     // this.conf = conf;
     this.started = false;
