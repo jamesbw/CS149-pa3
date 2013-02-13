@@ -41,6 +41,7 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
   // private Configuration conf;
   private Matcher matcher;
   private boolean started;
+  private boolean finished;
   private int fileLength;
 
   public ArticleRecordReader(JobConf conf, FileSplit fileSplit) throws IOException {
