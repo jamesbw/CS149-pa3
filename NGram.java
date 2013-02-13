@@ -11,7 +11,7 @@ import org.apache.hadoop.util.*;
 
 public class NGram extends Configured implements Tool {
 
-    public static class Map extends MapReduceBase implements Mapper<Text, Text, Text, IntWritable> {
+    public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
 
       // static enum Counters { INPUT_WORDS }
 
@@ -53,10 +53,10 @@ public class NGram extends Configured implements Tool {
       //   }
       // }
 
-      public void map(Text key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+      public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 
-      	output.collect(key, one);
-      	System.out.println(key.get());
+      	output.collect(value, one);
+      	System.out.println(value);
 
         // String line = (caseSensitive) ? value.toString() : value.toString().toLowerCase();
 
@@ -98,7 +98,8 @@ public class NGram extends Configured implements Tool {
       conf.setCombinerClass(Reduce.class);
       conf.setReducerClass(Reduce.class);
 
-      conf.setInputFormat(ArticleInputFormat.class);
+      // conf.setInputFormat(ArticleInputFormat.class);
+      conf.setInputFormat(TextInputFormat.class);
       conf.setOutputFormat(TextOutputFormat.class);
 
       // List<String> other_args = new ArrayList<String>();
