@@ -32,7 +32,7 @@ public class NGram extends Configured implements Tool {
 
         ngramSize = job.getInt("ngram.size", 3);
 
-        String queryString = ""
+        String queryString = "";
 
         try {
 	        Path queryFile = DistributedCache.getLocalCacheFiles(job)[0];
