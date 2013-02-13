@@ -22,11 +22,26 @@ public class NGram extends Configured implements Tool {
       // private Set<String> patternsToSkip = new HashSet<String>();
 
       private long numRecords = 0;
+      private int ngramSize;
       private String inputFile;
+      private NGramBag queryBag;
 
       public void configure(JobConf job) {
         caseSensitive = job.getBoolean("wordcount.case.sensitive", true);
         inputFile = job.get("map.input.file");
+
+        ngramSize = job.getInt("ngram.size", 3);
+
+        Path queryFile = DistributedCache.getLocalCacheFiles(job)[0];
+
+        BufferedReader fis = new BufferedReader(new FileReader(queryFile.toString()));
+        String queryString = "";
+        String queryLine = null;
+        while( (queryLine = fis.readLine()) != null) {
+        	queryString += "\n" + queryLine;
+        }
+
+        queryBag = new NGramBag(queryString);
 
         // if (job.getBoolean("wordcount.skip.patterns", false)) {
         //   Path[] patternsFiles = new Path[0];
@@ -55,7 +70,9 @@ public class NGram extends Configured implements Tool {
 
       public void map(Text key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 
-      	output.collect(key, one);
+      	NGramBag bag = new NGramBag(value, ngramSize);
+
+      	output.collect(key, new IntWritable(bag.similarity(queryBag)));
       	// System.out.println(value);
 
         // String line = (caseSensitive) ? value.toString() : value.toString().toLowerCase();
@@ -101,6 +118,9 @@ public class NGram extends Configured implements Tool {
       // conf.setInputFormat(ArticleInputFormat.class);
       conf.setInputFormat(ArticleInputFormat.class);
       conf.setOutputFormat(TextOutputFormat.class);
+
+      DistributedCache.addCacheFile(new Path(args[1]).toUri(), conf);
+      conf.setInt("ngram.size", Integer.parseInt(args[0]));
 
       // List<String> other_args = new ArrayList<String>();
       // for (int i=0; i < args.length; ++i) {
