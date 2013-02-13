@@ -36,14 +36,14 @@ public class NGramBag {
 class NGramInstance {
 	public List<String> words;
 
-	public NGramInstance(words) {
+	public NGramInstance(List words) {
 		this.words = new LinkedList(words);
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (o.getClass().equals(NGramInstance.class)) {
-			return o.words.equals(words);
+			return ((NGramInstance) o).words.equals(words);
 		}
 		else
 			return false;
