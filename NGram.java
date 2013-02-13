@@ -32,13 +32,18 @@ public class NGram extends Configured implements Tool {
 
         ngramSize = job.getInt("ngram.size", 3);
 
-        Path queryFile = DistributedCache.getLocalCacheFiles(job)[0];
+        try {
+	        Path queryFile = DistributedCache.getLocalCacheFiles(job)[0];
 
-        BufferedReader fis = new BufferedReader(new FileReader(queryFile.toString()));
-        String queryString = "";
-        String queryLine = null;
-        while( (queryLine = fis.readLine()) != null) {
-        	queryString += "\n" + queryLine;
+	        BufferedReader fis = new BufferedReader(new FileReader(queryFile.toString()));
+	        String queryString = "";
+	        String queryLine = null;
+	        while( (queryLine = fis.readLine()) != null) {
+	        	queryString += "\n" + queryLine;
+	        }
+        }
+        catch (Exception e){
+        	e.printStackTrace();
         }
 
         queryBag = new NGramBag(queryString, ngramSize);
