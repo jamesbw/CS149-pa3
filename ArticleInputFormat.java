@@ -47,6 +47,7 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
     // this.fileSplit = fileSplit;
     // this.conf = conf;
     this.started = false;
+    this.finished = false;
 
     this.fileLength = (int) fileSplit.getLength();
 
@@ -75,7 +76,10 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
       return true;
     }
     else
+    {
+      finished = true;
       return false;
+    }
   }
 
   public Text createKey() {
@@ -87,13 +91,13 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
   }
 
   public long getPos() throws IOException {
-    return started ? matcher.start() : 0;
+    return finished ? fileLength : (started ? matcher.start() : 0);
   }
 
   public void close() throws IOException {
   }
 
   public float getProgress() throws IOException {
-    return started ? matcher.start() / fileLength : 0;
+    return finished ? 1.0f : (started ? matcher.start() / fileLength : 0.0f);
   }
 }
