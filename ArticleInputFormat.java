@@ -35,7 +35,7 @@ public class ArticleInputFormat extends
 
 class ArticleRecordReader implements RecordReader<Text, Text> {
 
-  static private Pattern PATTERN = Pattern.compile("<title>(.*?)</title>(.*?)(<title>|$)");
+  static private Pattern PATTERN = Pattern.compile("<title>(.*?)</title>(.*?)(?=(<title>|$))", Pattern.DOTALL);
 
   // private FileSplit fileSplit;
   // private Configuration conf;
