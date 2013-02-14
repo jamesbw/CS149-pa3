@@ -9,7 +9,7 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.*;
 
-public class NGram extends Configured implements Tool {
+public class Ngram extends Configured implements Tool {
 
     public static class Map extends MapReduceBase implements Mapper<Text, Text, Text, IntWritable> {
 
