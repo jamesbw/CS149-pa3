@@ -9,7 +9,7 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.*;
 
-public class Ngram extends Configured implements Tool {
+public class NGram extends Configured implements Tool {
 
     public static class Map extends MapReduceBase implements Mapper<Text, Text, Text, IntWritable> {
 
@@ -153,7 +153,7 @@ public class Ngram extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-      int res = ToolRunner.run(new Configuration(), new Ngram(), args);
+      int res = ToolRunner.run(new Configuration(), new NGram(), args);
       System.exit(res);
     }
 }
