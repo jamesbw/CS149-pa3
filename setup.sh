@@ -1,6 +1,5 @@
 #!/bin/tcsh
 ./local-hadoop/stop-local-hadoop.py
-./local-hadoop/setup-local-hadoop.py
 ./local-hadoop/start-local-hadoop.py
 source ./local-hadoop/env-local-hadoop.tcsh
 

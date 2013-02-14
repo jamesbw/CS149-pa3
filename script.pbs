@@ -1,0 +1,25 @@
+#!/bin/sh
+
+########### UPDATE THESE VARIABLES ###############
+# the directory where your files are
+pa3_home=$HOME/CS149-pa3/
+##################################################
+
+######### ADD YOUR EXECUTION SCRIPT HERE #########
+cd $pa3_home
+# Clean up the directory
+# find . -name '*.class' -print0 | xargs -0 rm -f
+# Compile the program
+# mkdir -p class_dir/
+# javac -cp ${HADOOP_HOME}/hadoop-core-1.1.1.jar:. -d class_dir/ Tokenizer.java NGram.java
+# jar -cvf ngram.jar -C class_dir/ .
+
+#setup
+hadoop --config conf fs -mkdir query
+hadoop --config conf fs -put query1.txt query
+hadoop --config conf fs -mkdir input
+hadoop --config conf fs -put chunk_aa input
+
+# Run the program
+hadoop --config conf fs -rmr output/
+hadoop --config conf jar ngram.jar NGram 4 query/query1.txt input/ output/
