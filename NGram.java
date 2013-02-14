@@ -80,9 +80,9 @@ public class NGram extends Configured implements Tool {
 
       	int similarity = bag.similarity(queryBag);
       	if (similarity > 0) {
-	      	output.collect(key, new IntWritable(similarity));
-      	}
-      	// System.out.println(value);
+        	System.out.println(key);
+          output.collect(key, new IntWritable(similarity));
+        }
 
         // String line = (caseSensitive) ? value.toString() : value.toString().toLowerCase();
 
