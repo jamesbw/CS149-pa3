@@ -153,7 +153,7 @@ public class NGram extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-      int res = ToolRunner.run(new Configuration(), new NGram(), args);
+      int res = ToolRunner.run(new Configuration(), new Ngram(), args);
       System.exit(res);
     }
 }

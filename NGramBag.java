@@ -31,6 +31,10 @@ public class NGramBag {
 		}
 		return score;
 	}
+
+	public String toString(){
+		return bag.toString();
+	}
 }
 
 class NGramInstance {
@@ -52,5 +56,9 @@ class NGramInstance {
 	@Override
 	public int hashCode() {
 		return words.hashCode();
+	}
+
+	public String toString(){
+		return words.toString();
 	}
 }
