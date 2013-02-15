@@ -115,24 +115,24 @@ public class NGram extends Configured implements Tool {
         while (values.hasNext()) {
           ScoreTitleWritable article = values.next();
           System.out.println(article);
-          list.add(values.next());
+          list.add(new ScoreTitleWritable(article.getScore(), article.getTitle());
         }
 
         System.out.println("Values: " + list.size());
 
-        // Collections.sort(list, new Comparator(){
-        //   @Override
-        //   public int compare(Object o1, Object o2){
-        //     int score1 = ((ScoreTitleWritable) o1).getScore();
-        //     String title1 = ((ScoreTitleWritable) o1).getTitle();
-        //     int score2 = ((ScoreTitleWritable) o2).getScore();
-        //     String title2 = ((ScoreTitleWritable) o2).getTitle();
+        Collections.sort(list, new Comparator(){
+          @Override
+          public int compare(Object o1, Object o2){
+            int score1 = ((ScoreTitleWritable) o1).getScore();
+            String title1 = ((ScoreTitleWritable) o1).getTitle();
+            int score2 = ((ScoreTitleWritable) o2).getScore();
+            String title2 = ((ScoreTitleWritable) o2).getTitle();
 
-        //     if (score1 < score2) return 1;
-        //     if (score1 > score2) return -1;
-        //     return title2.compareTo(title1);
-        //   }
-        // });
+            if (score1 < score2) return 1;
+            if (score1 > score2) return -1;
+            return title2.compareTo(title1);
+          }
+        });
 
         int NUM_OUTPUT = 20;
 
