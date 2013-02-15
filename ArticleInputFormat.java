@@ -60,7 +60,7 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
     String fileAsString;
     try {
         in = fs.open(file);
-        IOUtils.readFully(in, contents, 0, contents.length);                
+        IOUtils.readFully(in, contents, fileSplit.getStart(), contents.length);                
         fileAsString = new String(contents);
     } finally {
         IOUtils.closeStream(in);
