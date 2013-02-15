@@ -55,5 +55,5 @@ public class ScoreTitleWritable implements Writable {
       if (score1 < score2) return -1;
       return title1.compareTo(title2);
     }
-  });
+  };
 }
