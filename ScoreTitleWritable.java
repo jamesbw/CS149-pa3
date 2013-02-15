@@ -32,7 +32,7 @@ public class ScoreTitleWritable implements Writable {
     return score;
   }
 
-  public String title getTitle(){
+  public String getTitle(){
     return title;
   }
 }

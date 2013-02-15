@@ -125,9 +125,7 @@ public class NGram extends Configured implements Tool {
 
             if (score1 < score2) return 1;
             if (score1 > score2) return -1;
-            if (title1 < title2) return 1;
-            if (title1 > title2) return -1;
-            return 0;
+            return title2.compareTo(title1);
           }
 
           @Override
