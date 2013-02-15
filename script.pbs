@@ -24,6 +24,15 @@ hadoop fs -put chunk_aa input
 hadoop fs -rmr output/
 hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx1024M -D mapred.reduce.tasks=1 -D mapred.map.tasks=3 4 query/query1.txt input/ output/
 
+hadoop fs -rmr output/
+hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx1024M 4 query/query1.txt /wikipedia/2gb output/
+
+
+hadoop fs -rmr output/
+hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx1024M 4 query/query1.txt /wikipedia/all output/
+
+
+
 rm -rf output
 hadoop fs -get output .
 cat output/*

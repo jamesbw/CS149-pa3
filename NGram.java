@@ -25,7 +25,7 @@ public class NGram extends Configured implements Tool {
       private long numRecords = 0;
       private int ngramSize;
       private String inputFile;
-      private NGramBag queryBag;
+      private static NGramBag queryBag;
 
       public void configure(JobConf job) {
         caseSensitive = job.getBoolean("wordcount.case.sensitive", true);
@@ -35,20 +35,23 @@ public class NGram extends Configured implements Tool {
 
         String queryString = "";
 
-        try {
-	        Path queryFile = DistributedCache.getLocalCacheFiles(job)[0];
+        if (queryBag == null){
+          try {
+  	        Path queryFile = DistributedCache.getLocalCacheFiles(job)[0];
 
-	        BufferedReader fis = new BufferedReader(new FileReader(queryFile.toString()));
-	        String queryLine = null;
-	        while( (queryLine = fis.readLine()) != null) {
-	        	queryString += "\n" + queryLine;
-	        }
-        }
-        catch (Exception e){
-        	e.printStackTrace();
+  	        BufferedReader fis = new BufferedReader(new FileReader(queryFile.toString()));
+  	        String queryLine = null;
+  	        while( (queryLine = fis.readLine()) != null) {
+  	        	queryString += "\n" + queryLine;
+  	        }
+          }
+          catch (Exception e){
+          	e.printStackTrace();
+          }
+
+          queryBag = new NGramBag(queryString, ngramSize);
         }
 
-        queryBag = new NGramBag(queryString, ngramSize);
 
         // if (job.getBoolean("wordcount.skip.patterns", false)) {
         //   Path[] patternsFiles = new Path[0];
