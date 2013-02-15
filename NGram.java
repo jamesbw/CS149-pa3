@@ -131,10 +131,10 @@ public class NGram extends Configured implements Tool {
             return title2.compareTo(title1);
           }
 
-          @Override
-          public boolean equals(Object o){
-            return false;
-          }
+          // @Override
+          // public boolean equals(Object o){
+          //   return false;
+          // }
         });
 
         int NUM_OUTPUT = 20;
