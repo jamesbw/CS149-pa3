@@ -7,6 +7,8 @@ public class ScoreTitleWritable implements Writable {
   private int score;
   private String title;
 
+  public ScoreTitleWritable(){}
+
   public ScoreTitleWritable(int score, String title){
     this.score = score;
     this.title = title;
