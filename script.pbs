@@ -15,11 +15,11 @@ cd $pa3_home
 # jar -cvf ngram.jar -C class_dir/ .
 
 #setup
-hadoop --config conf fs -mkdir query
-hadoop --config conf fs -put query1.txt query
-hadoop --config conf fs -mkdir input
-hadoop --config conf fs -put chunk_aa input
+hadoop fs -mkdir query
+hadoop fs -put query1.txt query
+hadoop fs -mkdir input
+hadoop fs -put chunk_aa input
 
 # Run the program
-hadoop --config conf fs -rmr output/
-hadoop --config conf jar ngram.jar NGram 4 query/query1.txt input/ output/
+hadoop fs -rmr output/
+hadoop jar ngram.jar NGram 4 query/query1.txt input/ output/

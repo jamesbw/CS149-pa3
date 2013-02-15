@@ -11,7 +11,8 @@ import org.apache.hadoop.util.*;
 
 public class NGram extends Configured implements Tool {
 
-    public static class Map extends MapReduceBase implements Mapper<Text, Text, Text, IntWritable> {
+    // public static class Map extends MapReduceBase implements Mapper<Text, Text, Text, IntWritable> {
+    public static class Map extends MapReduceBase implements Mapper<Text, Text, IntWritable, ScoreTitleWritable> {
 
       // static enum Counters { INPUT_WORDS }
 
@@ -74,14 +75,16 @@ public class NGram extends Configured implements Tool {
       //   }
       // }
 
-      public void map(Text key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+      // public void map(Text key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+      public void map(Text key, Text value, OutputCollector<IntWritable, ScoreTitleWritable> output, Reporter reporter) throws IOException {
 
       	NGramBag bag = new NGramBag(value.toString(), ngramSize);
 
       	int similarity = bag.similarity(queryBag);
       	if (similarity > 0) {
         	System.out.println(key);
-          output.collect(key, new IntWritable(similarity));
+          // output.collect(key, new IntWritable(similarity));
+          output.collect(one, new ScoreTitleWritable(similarity, key.toString()));
         }
 
         // String line = (caseSensitive) ? value.toString() : value.toString().toLowerCase();
@@ -103,14 +106,45 @@ public class NGram extends Configured implements Tool {
       }
     }
 
-    public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
-      public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-        int sum = 0;
-        // while (values.hasNext()) {
-        //   sum += values.next().get();
-        // }
-        // output.collect(key, new IntWritable(sum));
-      	output.collect(key, values.next());
+    // public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class Reduce extends MapReduceBase implements Reducer<IntWritable, ScoreTitleWritable, Text, IntWritable> {
+      // public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+      public void reduce(IntWritable key, Iterator<ScoreTitleWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+
+        List<ScoreTitleWritable> list = new LinkedList<ScoreTitleWritable>();
+        while (values.hasNext()) {
+          list.add(values.next());
+        }
+        Collections.sort(list, new Comparator(){
+          @Override
+          public int compare(Object o1, Object o2){
+            int score1 = ((ScoreTitleWritable) o1).getScore();
+            String title1 = ((ScoreTitleWritable) o1).getTitle();
+            int score2 = ((ScoreTitleWritable) o2).getScore();
+            String title2 = ((ScoreTitleWritable) o2).getTitle();
+
+            if (score1 < score2) return 1;
+            if (score1 > score2) return -1;
+            if (title1 < title2) return 1;
+            if (title1 > title2) return -1;
+            return 0;
+          }
+
+          @Override
+          public boolean equals(Object o){
+            return false;
+          }
+        });
+
+        int NUM_OUTPUT = 20;
+
+        for (int i = 0; i < NUM_OUTPUT ; i++) {
+          ScoreTitleWritable article = list.get(i);
+          output.collect(new Text(article.getTitle()), new IntWritable(article.getScore()));
+        }
+
+
+      	// output.collect(key, values.next());
       }
     }
 
