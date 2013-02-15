@@ -118,9 +118,13 @@ public class NGram extends Configured implements Tool {
         while (values.hasNext()) {
           ScoreTitleWritable article = values.next();
           System.out.println(article);
-          if (queue.size() >= NUM_OUTPUT && ScoreTitleWritable.comparator.compare(article, queue.peek()) >= 0) {
+          if (queue.size() < NUM_OUTPUT)
             queue.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
-            queue.poll();
+          else {
+            if (ScoreTitleWritable.comparator.compare(article, queue.peek()) >= 0) {
+              queue.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
+              queue.poll();
+            }
           }
         }
 
