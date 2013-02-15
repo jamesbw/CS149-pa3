@@ -37,4 +37,9 @@ public class ScoreTitleWritable implements Writable {
   public String getTitle(){
     return title;
   }
+
+  @Override
+  public String toString(){
+    return "Title: " + title + ", Score: " + score;
+  }
 }
