@@ -153,6 +153,9 @@ public class NGram extends Configured implements Tool {
       conf.setOutputKeyClass(Text.class);
       conf.setOutputValueClass(IntWritable.class);
 
+      conf.setMapOutputKeyClass(IntWritable.class);
+      conf.setMapOutputValueClass(ScoreTitleWritable.class);
+
       conf.setMapperClass(Map.class);
       conf.setCombinerClass(Reduce.class);
       conf.setReducerClass(Reduce.class);
