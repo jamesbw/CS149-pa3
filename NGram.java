@@ -113,7 +113,7 @@ public class NGram extends Configured implements Tool {
 
         int NUM_OUTPUT = 20;
 
-        PriorityQueue<ScoreTitleWritable> queue = new PriorityQueue<ScoreTitleWritable>(NUM_OUTPUT + 1, ScoreTitleWritable.comparator);
+        java.util.PriorityQueue<ScoreTitleWritable> queue = new java.util.PriorityQueue<ScoreTitleWritable>(NUM_OUTPUT + 1, ScoreTitleWritable.comparator);
 
         while (values.hasNext()) {
           ScoreTitleWritable article = values.next();
