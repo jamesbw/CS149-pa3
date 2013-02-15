@@ -115,6 +115,9 @@ public class NGram extends Configured implements Tool {
         while (values.hasNext()) {
           list.add(values.next());
         }
+
+        System.out.println("Values: " + list.size());
+
         Collections.sort(list, new Comparator(){
           @Override
           public int compare(Object o1, Object o2){
@@ -138,6 +141,7 @@ public class NGram extends Configured implements Tool {
 
         for (int i = 0; i < NUM_OUTPUT ; i++) {
           ScoreTitleWritable article = list.get(i);
+          System.out.println("Title: " + article.getTitle() + " , Score: " + article.getScore());
           output.collect(new Text(article.getTitle()), new IntWritable(article.getScore()));
         }
 
