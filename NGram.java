@@ -115,7 +115,7 @@ public class NGram extends Configured implements Tool {
         while (values.hasNext()) {
           ScoreTitleWritable article = values.next();
           System.out.println(article);
-          list.add(new ScoreTitleWritable(article.getScore(), article.getTitle());
+          list.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
         }
 
         System.out.println("Values: " + list.size());
