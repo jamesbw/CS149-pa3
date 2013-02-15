@@ -111,36 +111,53 @@ public class NGram extends Configured implements Tool {
       // public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
       public void reduce(IntWritable key, Iterator<ScoreTitleWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 
-        List<ScoreTitleWritable> list = new LinkedList<ScoreTitleWritable>();
+        int NUM_OUTPUT = 20;
+
+        PriorityQueue<ScoreTitleWritable> queue = new PriorityQueue<ScoreTitleWritable>(NUM_OUTPUT + 1, ScoreTitleWritable.comparator);
+
         while (values.hasNext()) {
           ScoreTitleWritable article = values.next();
           System.out.println(article);
-          list.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
+          if (queue.size() >= NUM_OUTPUT && ScoreTitleWritable.comparator.compare(article, queue.peek()) >= 0) {
+            queue.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
+            queue.poll();
+          }
         }
 
-        System.out.println("Values: " + list.size());
-
-        Collections.sort(list, new Comparator(){
-          @Override
-          public int compare(Object o1, Object o2){
-            int score1 = ((ScoreTitleWritable) o1).getScore();
-            String title1 = ((ScoreTitleWritable) o1).getTitle();
-            int score2 = ((ScoreTitleWritable) o2).getScore();
-            String title2 = ((ScoreTitleWritable) o2).getTitle();
-
-            if (score1 < score2) return 1;
-            if (score1 > score2) return -1;
-            return title2.compareTo(title1);
-          }
-        });
-
-        int NUM_OUTPUT = 20;
-
-        for (int i = 0; i < NUM_OUTPUT ; i++) {
-          ScoreTitleWritable article = list.get(i);
-          System.out.println("Title: " + article.getTitle() + " , Score: " + article.getScore());
+        while (!queue.isEmpty()){
+          ScoreTitleWritable article = queue.poll();
           output.collect(new Text(article.getTitle()), new IntWritable(article.getScore()));
         }
+
+        // List<ScoreTitleWritable> list = new LinkedList<ScoreTitleWritable>();
+        // while (values.hasNext()) {
+        //   ScoreTitleWritable article = values.next();
+        //   System.out.println(article);
+        //   list.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
+        // }
+
+        // System.out.println("Values: " + list.size());
+
+        // Collections.sort(list, new Comparator(){
+        //   @Override
+        //   public int compare(Object o1, Object o2){
+        //     int score1 = ((ScoreTitleWritable) o1).getScore();
+        //     String title1 = ((ScoreTitleWritable) o1).getTitle();
+        //     int score2 = ((ScoreTitleWritable) o2).getScore();
+        //     String title2 = ((ScoreTitleWritable) o2).getTitle();
+
+        //     if (score1 < score2) return 1;
+        //     if (score1 > score2) return -1;
+        //     return title2.compareTo(title1);
+        //   }
+        // });
+
+
+        // for (int i = 0; i < NUM_OUTPUT ; i++) {
+        //   ScoreTitleWritable article = list.get(i);
+        //   System.out.println("Title: " + article.getTitle() + " , Score: " + article.getScore());
+        //   output.collect(new Text(article.getTitle()), new IntWritable(article.getScore()));
+        // }
 
 
       	// output.collect(key, values.next());
