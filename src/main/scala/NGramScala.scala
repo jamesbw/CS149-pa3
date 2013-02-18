@@ -54,7 +54,7 @@ object NGramScala extends Application {
 	val queryBag = new NGramBag(query1str, 4)
 	val res = wiki.map{ case (title, article) => Article(title.toString, new NGramBag(article.toString, 4).score(queryBag))}.filter(  _.score > 0)
 	// val queue = new PriorityQueue[Article]()(articleOrdering)
-	val queue = new Queue[Article]()(articleOrdering)
+	val queue = new Queue[Article]()()
 
 	// res.aggregate[PriorityQueue[Article]](new PriorityQueue[Article]())(aggregateIntoQueue, mergeQueues)
 	res.aggregate[Queue[Article]](new Queue[Article]())(aggregateIntoQueue, mergeQueues)
