@@ -46,7 +46,7 @@ object NGramScala extends Application {
 	val query1 = sc.textFile("hdfs://myth1:47412/user/jamesbw/query/query1.txt")
 	val query1str = query1.reduce( _ + _ )
 	val queryBag = new NGramBag(query1str, 4)
-	val res = wiki.map{ case (title, article) => (title.toString, new NGramBag(article.toString, 4).score(queryBag))}.filter(  _._2 > 0)
+	val res = wiki.map{ case (title, article) => Article(title.toString, new NGramBag(article.toString, 4).score(queryBag))}.filter(  _.score > 0)
 	val queue = new PriorityQueue[Article]()(articleOrdering)
 
 	res.aggregate[PriorityQueue[Article]](new PriorityQueue[Article]())(aggregateIntoQueue, mergeQueues)
