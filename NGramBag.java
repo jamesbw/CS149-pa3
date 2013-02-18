@@ -1,7 +1,7 @@
 import java.util.*;
+import java.io.*;
 
-
-public class NGramBag {
+public class NGramBag implements Serializable {
 
 	// private Set<NGramInstance> bag;
 	public Map<NGramInstance, Integer> ngramCounts;
@@ -57,7 +57,7 @@ public class NGramBag {
 	}
 }
 
-class NGramInstance {
+class NGramInstance implements Serializable {
 	public List<String> words;
 
 	public NGramInstance(List words) {
