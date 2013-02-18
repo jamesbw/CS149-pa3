@@ -7,7 +7,7 @@ import org.apache.hadoop.io.Text
 import scala.collection.mutable.PriorityQueue
 
 object NGramScala extends Application {
-	case class Article(title: String, score: Int) {}
+	case class Article(title: String, score: Int) extends Serializable{}
 
 	implicit def articleOrdering: Ordering[Article] = new Ordering[Article] {
 		def compare(art1: Article, art2: Article): Int = {
