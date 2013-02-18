@@ -39,10 +39,10 @@ public class Test {
 		String queryFile = readFile("./query1.txt");
 		NGramBag bag = new NGramBag(queryFile, 4);
 		System.out.println(bag);
-		System.out.println(bag.similarity(bag));
+		System.out.println(bag.score(bag));
 	}
 
-	private static void testSimilarity() throws IOException {
+	private static void testScore() throws IOException {
 		String queryText = readFile("./query1.txt");
 		NGramBag queryBag = new NGramBag(queryText, 4);
 
@@ -54,13 +54,13 @@ public class Test {
 		String astroText = matcher.group(1);
 		NGramBag astroBag = new NGramBag(astroText, 4);
 		System.out.println(astroBag);
-		System.out.println(astroBag.similarity(queryBag));
-		System.out.println(queryBag.similarity(astroBag));
+		System.out.println(astroBag.score(queryBag));
+		System.out.println(queryBag.score(astroBag));
 	}
 
 	public static void main(String[] args) throws IOException{
 		// testPattern();
 		// testBag();
-		testSimilarity();
+		testScore();
 	}
 }
