@@ -43,7 +43,7 @@ public class Test {
 	}
 
 	private static void testScore() throws IOException {
-		String queryText = readFile("./query1.txt");
+		String queryText = readFile("./query2.txt");
 		NGramBag queryBag = new NGramBag(queryText, 4);
 
 		String wikiFile = readFile("./chunk_aa");
@@ -53,7 +53,7 @@ public class Test {
 		matcher.find();
 		String astroText = matcher.group(1);
 		NGramBag astroBag = new NGramBag(astroText, 4);
-		System.out.println(astroBag);
+		System.out.println(queryBag);
 		System.out.println(astroBag.score(queryBag));
 		System.out.println(queryBag.score(astroBag));
 	}
