@@ -19,7 +19,7 @@ object NGramScala extends Application {
 		}
 	}
 
-	def aggregateIntoQueue(queue: PriorityQueue[Article], article: Article ) {
+	def aggregateIntoQueue(queue: PriorityQueue[Article], article: Article ) = {
 		if (queue.size < 20) {
 			queue.enqueue(article)
 		}
@@ -33,7 +33,7 @@ object NGramScala extends Application {
 		queue
 	}
 
-	def mergeQueues(queue1: PriorityQueue[Article], queue2: PriorityQueue[Article]) {
+	def mergeQueues(queue1: PriorityQueue[Article], queue2: PriorityQueue[Article]) = {
 		queue2 foreach { article => 
 			aggregateIntoQueue(queue1, article)
 		}
