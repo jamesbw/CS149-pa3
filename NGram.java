@@ -173,7 +173,7 @@ public class NGram extends Configured implements Tool {
       }
     }
 
-    public static class Combine extends MapReduceBase implements Reducer<IntWritable, ScoreTitleWritable, Text, IntWritable> {
+    public static class Combine extends MapReduceBase implements Reducer<IntWritable, ScoreTitleWritable, IntWritable, ScoreTitleWritable> {
       private final static IntWritable one = new IntWritable(1);
       public void reduce(IntWritable key, Iterator<ScoreTitleWritable> values, OutputCollector<IntWritable, ScoreTitleWritable> output, Reporter reporter) throws IOException {
 
