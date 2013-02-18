@@ -30,12 +30,14 @@ object NGramScala extends Application {
 				queue.dequeue
 			}
 		}
+		queue
 	}
 
 	def mergeQueues(queue1: PriorityQueue[Article], queue2: PriorityQueue[Article]) {
 		queue2 foreach { article => 
 			aggregateIntoQueue(queue1, article)
 		}
+		queue
 	}
 
 	val logFile = "./log" // Should be some file on your system
