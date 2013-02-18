@@ -6,7 +6,7 @@ import SparkContext._
 import org.apache.hadoop.io.Text
 import scala.collection.mutable.PriorityQueue
 
-object NGram extends Application {
+object NGramScala extends Application {
 	case class Article(title: String, score: Int) {}
 
 	implicit def articleOrdering: Ordering[Article] = new Ordering[Article] {

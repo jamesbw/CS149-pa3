@@ -1,4 +1,4 @@
-name := "NGram"
+name := "NGramScala"
 
 version := "1.0"
 
