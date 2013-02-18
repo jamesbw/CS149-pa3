@@ -3,37 +3,57 @@ import java.util.*;
 
 public class NGramBag {
 
-	private Set<NGramInstance> bag;
+	// private Set<NGramInstance> bag;
+	public Map<NGramInstance, Integer> ngramCounts;
 
 	public NGramBag(String text, int size) {
-		this.bag = new HashSet<NGramInstance>();
+		// this.bag = new HashSet<NGramInstance>();
+		this.ngramCounts = new HashMap<NGramInstance, Integer>();
 		LinkedList<String> words = new LinkedList<String>();
 		Tokenizer tokenizer = new Tokenizer(text);
 		while (tokenizer.hasNext()) {
 			words.add(tokenizer.next());
 			if(words.size() > size) {
 				words.remove();
-				bag.add(new NGramInstance(words));
+				NGramInstance newInstance = new NGramInstance(words);
+				// bag.add(new NGramInstance(words));
+				if (!this.ngramCounts.contains(newInstance)) {
+					this.ngramCounts.set(newInstance, 1);
+				}
+				else {
+					this.ngramCounts.set(newInstance, this.ngramCounts.get(newInstance) + 1);
+				}
 			}
 		}
 	}
 
-	public boolean contains(NGramInstance ngram) {
-		return bag.contains(ngram);
-	}
+	// public boolean contains(NGramInstance ngram) {
+	// 	return bag.contains(ngram);
+	// }
 
-	public int similarity(NGramBag other) {
+	// public int similarity(NGramBag other) {
+	// 	int score = 0;
+	// 	for (NGramInstance ngram : bag) {
+	// 		if (other.contains(ngram)) {
+	// 			score ++;
+	// 		}
+	// 	}
+	// 	return score;
+	// }
+
+	public int score(NGramBag query) {
 		int score = 0;
-		for (NGramInstance ngram : bag) {
-			if (other.contains(ngram)) {
-				score ++;
+		for (NGramInstance ngram : query.ngramCounts) {
+			if (ngramCounts.contains(ngram)) {
+				score += ngramCounts.get(ngram);
 			}
 		}
 		return score;
 	}
 
 	public String toString(){
-		return bag.toString();
+		// return bag.toString();
+		return ngramCounts.toString();
 	}
 }
 

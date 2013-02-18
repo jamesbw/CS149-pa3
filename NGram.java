@@ -83,7 +83,8 @@ public class NGram extends Configured implements Tool {
 
       	NGramBag bag = new NGramBag(value.toString(), ngramSize);
 
-      	int similarity = bag.similarity(queryBag);
+      	// int similarity = bag.similarity(queryBag);
+        int similarity = bag.score(queryBag);
       	if (similarity > 0) {
         	System.out.println(key);
           // output.collect(key, new IntWritable(similarity));

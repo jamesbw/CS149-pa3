@@ -29,7 +29,7 @@ hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx1024M 4 query/query1.tx
 
 
 hadoop fs -rmr output/
-hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx4084M 4 query/query2.txt /wikipedia/all output/
+hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx4084M 4 query/query3.txt /wikipedia/all output/
 
 
 
