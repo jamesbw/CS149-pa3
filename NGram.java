@@ -173,6 +173,35 @@ public class NGram extends Configured implements Tool {
       }
     }
 
+    public static class Combine extends MapReduceBase implements Reducer<IntWritable, ScoreTitleWritable, Text, IntWritable> {
+      private final static IntWritable one = new IntWritable(1);
+      public void reduce(IntWritable key, Iterator<ScoreTitleWritable> values, OutputCollector<IntWritable, ScoreTitleWritable> output, Reporter reporter) throws IOException {
+
+        int NUM_OUTPUT = 20;
+
+        java.util.PriorityQueue<ScoreTitleWritable> queue = new java.util.PriorityQueue<ScoreTitleWritable>(NUM_OUTPUT + 1, ScoreTitleWritable.comparator);
+
+        while (values.hasNext()) {
+          ScoreTitleWritable article = values.next();
+          System.out.println(article);
+          if (queue.size() < NUM_OUTPUT){
+            queue.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
+          }
+          else {
+            if (ScoreTitleWritable.comparator.compare(article, queue.peek()) >= 0) {
+              queue.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
+              queue.poll();
+            }
+          }
+        }
+
+        while (!queue.isEmpty()){
+          ScoreTitleWritable article = queue.poll();
+          output.collect(one, article);
+        }
+      }
+    }
+
     public int run(String[] args) throws Exception {
       JobConf conf = new JobConf(getConf(), NGram.class);
       conf.setJobName("ngram");
@@ -184,7 +213,7 @@ public class NGram extends Configured implements Tool {
       conf.setMapOutputValueClass(ScoreTitleWritable.class);
 
       conf.setMapperClass(Map.class);
-      // conf.setCombinerClass(Reduce.class);
+      conf.setCombinerClass(Combine.class);
       conf.setReducerClass(Reduce.class);
 
       // conf.setInputFormat(ArticleInputFormat.class);
