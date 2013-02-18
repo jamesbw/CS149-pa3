@@ -126,7 +126,7 @@ public class NGram extends Configured implements Tool {
             queue.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
           }
           else {
-            if (ScoreTitleWritable.comparator.compare(article, queue.peek()) >= 0) {
+            if (ScoreTitleWritable.comparator.compare(article, queue.peek()) > 0) {
               queue.add(new ScoreTitleWritable(article.getScore(), article.getTitle()));
               queue.poll();
             }
