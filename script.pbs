@@ -15,24 +15,25 @@ cd $pa3_home
 # jar -cvf ngram.jar -C class_dir/ .
 
 #setup
-hadoop fs -mkdir query
-hadoop fs -put query1.txt query
-hadoop fs -mkdir input
-hadoop fs -put chunk_aa input
+# hadoop fs -mkdir query
+# hadoop fs -put query1.txt query
+# hadoop fs -put query2.txt query
+# hadoop fs -mkdir input
+# hadoop fs -put chunk_aa input
 
 # Run the program
 hadoop fs -rmr output/
 hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx1024M -D mapred.reduce.tasks=1 -D mapred.map.tasks=3 4 query/query1.txt input/ output/
 
-hadoop fs -rmr output/
-hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx1024M 4 query/query1.txt /wikipedia/2gb output/
+# hadoop fs -rmr output/
+# hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx1024M 4 query/query1.txt /wikipedia/2gb output/
 
 
-hadoop fs -rmr output/
-hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx4084M 4 query/query3.txt /wikipedia/all output/
+# hadoop fs -rmr output/
+# hadoop jar ngram.jar NGram -D mapred.child.java.opts=-Xmx4084M 4 query/query1.txt /wikipedia/all output/
 
 
 
-rm -rf output
-hadoop fs -get output .
-cat output/*
+# rm -rf output
+# hadoop fs -get output .
+# cat output/*
