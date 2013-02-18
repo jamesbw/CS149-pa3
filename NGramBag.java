@@ -17,11 +17,11 @@ public class NGramBag {
 				words.remove();
 				NGramInstance newInstance = new NGramInstance(words);
 				// bag.add(new NGramInstance(words));
-				if (!this.ngramCounts.contains(newInstance)) {
-					this.ngramCounts.set(newInstance, 1);
+				if (!this.ngramCounts.containsKey(newInstance)) {
+					this.ngramCounts.put(newInstance, 1);
 				}
 				else {
-					this.ngramCounts.set(newInstance, this.ngramCounts.get(newInstance) + 1);
+					this.ngramCounts.put(newInstance, this.ngramCounts.get(newInstance) + 1);
 				}
 			}
 		}
@@ -43,8 +43,8 @@ public class NGramBag {
 
 	public int score(NGramBag query) {
 		int score = 0;
-		for (NGramInstance ngram : query.ngramCounts) {
-			if (ngramCounts.contains(ngram)) {
+		for (NGramInstance ngram : query.ngramCounts.keySet()) {
+			if (ngramCounts.containsKey(ngram)) {
 				score += ngramCounts.get(ngram);
 			}
 		}
