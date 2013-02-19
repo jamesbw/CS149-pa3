@@ -128,7 +128,7 @@ object NGramScala extends Serializable{
 
     def main(args: Array[String]) {
         val logFile = "./log" // Should be some file on your system
-        // val sc = new SparkContext("local", "Simple Job")
+        val sc = new SparkContext("local", "Simple Job")
         val wiki = sc.hadoopFile[Text, Text, ArticleInputFormat]("/usr/class/cs149/wikipedia/1gb")
 
         // val queue = new PriorityQueue[Article]()(articleOrdering)
