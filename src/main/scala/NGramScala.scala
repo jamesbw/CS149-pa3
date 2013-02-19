@@ -108,8 +108,10 @@ object NGramScala {
 
 
     def main(args: Array[String]) {
+        val logFile = "./log" // Should be some file on your system
         val sc = new SparkContext("local", "Simple Job")
-        val wiki = sc.hadoopFile[Text, Text, ArticleInputFormat]("/usr/class/cs149/wikipedia/1gb")
+        // val wiki = sc.hadoopFile[Text, Text, ArticleInputFormat]("/usr/class/cs149/wikipedia/1gb")
+        val wiki = sc.hadoopFile[Text, Text, ArticleInputFormat]("hdfs://myth1:47412/user/jamesbw/input/chunk_aa")
         val query1 = sc.textFile("hdfs://myth1:47412/user/jamesbw/query/query1.txt")
         val query1str = query1.reduce( _ + _ )
         val queryBag = new NGramBag(query1str, 4)
