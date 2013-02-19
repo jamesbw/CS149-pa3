@@ -6,6 +6,7 @@ import SparkContext._
 import org.apache.hadoop.io.Text
 // import scala.collection.mutable.PriorityQueue
 import scala.collection.mutable.Queue
+import java.io.*
 
 /*
 object NGramScala extends Application {
