@@ -6,7 +6,7 @@ import SparkContext._
 import org.apache.hadoop.io.Text
 // import scala.collection.mutable.PriorityQueue
 import scala.collection.mutable.Queue
-import java.io.*
+import java.io._
 
 /*
 object NGramScala extends Application {
@@ -126,7 +126,7 @@ object NGramScala {
             "Title: %s ; Score: %d\n" format (article.title, article.score) 
         }.mkString
 
-        val pw = new java.io.PrintWriter(new File("./scala_output"))
+        val pw = new PrintWriter(new File("./scala_output"))
         pw.write(saveStr)
         pw.close()
     }
