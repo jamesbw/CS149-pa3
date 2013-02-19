@@ -114,6 +114,12 @@ object NGramScala {
         val query1str = query1.reduce( _ + _ )
         val queryBag = new NGramBag(query1str, 4)
         val res = wiki.map{ case (title, article) => Article(title.toString, new NGramBag(article.toString, 4).score(queryBag))}.filter(  _.score > 0)
+
+        val queue = new Queue[Article]()
+
+        res.aggregate[Queue[Article]](new Queue[Article]())(aggregateIntoQueue, mergeQueues)
+
+        queue.toList.reverse.foreach(println)
     }
 }
 
