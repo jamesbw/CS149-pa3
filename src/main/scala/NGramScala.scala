@@ -121,7 +121,13 @@ object NGramScala {
 
         res.aggregate[Queue[Article]](new Queue[Article]())(aggregateIntoQueue, mergeQueues)
 
-        queue.toList.reverse.foreach(println)
+        val saveStr = queue.toList.reverse.map{ article =>
+            "Title: %s ; Score: %d\n" format (article.title, article.score) 
+        }.mkString
+
+        val pw = new java.io.PrintWriter(new File("./scala_output"))
+        pw.write(saveStr)
+        pw.close()
     }
 }
 
