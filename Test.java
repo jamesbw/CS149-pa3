@@ -23,7 +23,6 @@ public class Test {
 
 	private static void testPattern() throws IOException {
 		Pattern PATTERN = Pattern.compile("<title>(.*?)</title>(.*?)(?=(<title>|$))", Pattern.DOTALL);
-		// Pattern PATTERN = Pattern.compile("<title>(.*?)</title>", Pattern.DOTALL);
 		String file = readFile("./chunk_aa");
 		Matcher matcher = PATTERN.matcher(file);
 		int count = 0;

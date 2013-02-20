@@ -3,11 +3,9 @@ import java.io.*;
 
 public class NGramBag implements Serializable {
 
-	// private Set<NGramInstance> bag;
 	public Map<NGramInstance, Integer> ngramCounts;
 
 	public NGramBag(String text, int size) {
-		// this.bag = new HashSet<NGramInstance>();
 		this.ngramCounts = new HashMap<NGramInstance, Integer>();
 		LinkedList<String> words = new LinkedList<String>();
 		Tokenizer tokenizer = new Tokenizer(text);
@@ -16,7 +14,6 @@ public class NGramBag implements Serializable {
 			if(words.size() > size) {
 				words.remove();
 				NGramInstance newInstance = new NGramInstance(words);
-				// bag.add(new NGramInstance(words));
 				if (!this.ngramCounts.containsKey(newInstance)) {
 					this.ngramCounts.put(newInstance, 1);
 				}
@@ -26,21 +23,6 @@ public class NGramBag implements Serializable {
 			}
 		}
 	}
-
-	// public boolean contains(NGramInstance ngram) {
-	// 	return bag.contains(ngram);
-	// }
-
-	// public int similarity(NGramBag other) {
-	// 	int score = 0;
-	// 	for (NGramInstance ngram : bag) {
-	// 		if (other.contains(ngram)) {
-	// 			score ++;
-	// 		}
-	// 	}
-	// 	return score;
-	// }
-
 	public int score(NGramBag query) {
 		int score = 0;
 		for (NGramInstance ngram : query.ngramCounts.keySet()) {
@@ -52,7 +34,6 @@ public class NGramBag implements Serializable {
 	}
 
 	public String toString(){
-		// return bag.toString();
 		return ngramCounts.toString();
 	}
 }

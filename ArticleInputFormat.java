@@ -7,11 +7,8 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapred.FileInputFormat;
 
-// import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapred.FileSplit;
-// import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapred.InputSplit;
-// import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.conf.Configuration;
  
@@ -37,16 +34,12 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
 
   static private Pattern PATTERN = Pattern.compile("<title>(.*?)</title>(.*?)(?=(<title>|$))", Pattern.DOTALL);
 
-  // private FileSplit fileSplit;
-  // private Configuration conf;
   private Matcher matcher;
   private boolean started;
   private boolean finished;
   private int fileLength;
 
   public ArticleRecordReader(JobConf conf, FileSplit fileSplit) throws IOException {
-    // this.fileSplit = fileSplit;
-    // this.conf = conf;
     this.started = false;
     this.finished = false;
 
@@ -60,7 +53,6 @@ class ArticleRecordReader implements RecordReader<Text, Text> {
     String fileAsString;
     try {
         in = fs.open(file);
-        // IOUtils.readFully(in, contents, fileSplit.getStart(), contents.length);  
         in.readFully(fileSplit.getStart(), contents, 0, contents.length);              
         fileAsString = new String(contents);
     } finally {
