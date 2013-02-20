@@ -1,0 +1,15 @@
+
+
+I implemented the assignment using spark. The main source file is in src/main/scala/NGramScala.scala . It reuses some of the Java code for Ngram generation and matching. It is compiled with "sbt package" and executed with "sbt run". The sbt config is ngram.sbt.
+
+Results
+-------
+Spark was run on the myth cluster on a 1gb wikipedia chunk. The results are stored in query1scala and query2scala. The running time was reasonable, on the order of 1-2 minutes. I'm not sure how many resources are available on a myth machine, but it seems a bit better than a hadoop run.
+
+Comments on Spark
+-----------------
+Spark is conceptually very easy. The installation took some time, because of setting the right environment variables for the scala and spark paths, but wasn't too difficult. Spark hides a lot of the complexity of what is going on behind the scenes, which is practical but also a bit dangerous. I got stuck many times with Spark trying to serialize objects because it wanted to share them across mappers. Some, like the scala PriorityQueue, contain fields that are not serializable, so I had to use an ordinary Queue and sort it. This was probably rather inefficient.
+
+Spark also allows more freedom in how to structure the parallel program. One can adhere to Hadoop-like map and reduceByKey operations, or use more functional things like fold or aggregate.
+
+I find the scala compiler is also not always very clear on its type information. In particular when using the scala or spark repl, since the repl is doing some fancy tricks behind the scenes that lead to compile errors that do not occur in a regularly compiled scala program.

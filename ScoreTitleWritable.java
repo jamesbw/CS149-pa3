@@ -3,7 +3,6 @@ import java.io.*;
 import org.apache.hadoop.io.*;
 
 public class ScoreTitleWritable implements Writable {
-  // Some data     
   private int score;
   private String title;
 
